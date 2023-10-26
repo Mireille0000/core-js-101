@@ -391,8 +391,11 @@ function getItemsSum(arr) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  if (arr.filter(Boolean).length > 0) {
+    return arr.length - arr.filter(Boolean).length;
+  }
+  return arr.length;
 }
 
 /**
@@ -409,8 +412,19 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurrences(arr, item) {
+  return arr.reduce((acc, itm, index, array) => {
+    let accum = acc;
+    if (array.indexOf(itm) !== index && itm === item) {
+      accum += 1;
+    }
+
+    if (array.indexOf(item) < 0) {
+      return 0;
+    }
+
+    return accum;
+  }, 1);
 }
 
 /**
@@ -424,8 +438,8 @@ function findAllOccurrences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  return arr.map((item) => item.toString()).join(',');
 }
 
 
@@ -494,8 +508,8 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  return Array.from({ length: end - start + 1 }, (_, i) => start - 1 + 1 + i);
 }
 
 /**
