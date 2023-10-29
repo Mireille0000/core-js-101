@@ -175,8 +175,17 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const { radius } = circle;
+  const x0 = circle.center.x;
+  const y0 = circle.center.y;
+  const { x, y } = point;
+
+  if (((x - x0) * (x - x0) + (y - y0) * (y - y0)) < radius * radius) {
+    return true;
+  }
+
+  return false;
 }
 
 
@@ -218,8 +227,30 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let squareBrackets = isStartIncluded;
+  let roundBrackets = isEndIncluded;
+
+  if (squareBrackets === true) {
+    squareBrackets = '[';
+  }
+  if (squareBrackets === false) {
+    squareBrackets = '(';
+  }
+
+  if (roundBrackets === true) {
+    roundBrackets = ']';
+  }
+
+  if (roundBrackets === false) {
+    roundBrackets = ')';
+  }
+
+  if (a > b) {
+    return `${squareBrackets}${b}, ${a}${roundBrackets}`;
+  }
+
+  return `${squareBrackets}${a}, ${b}${roundBrackets}`;
 }
 
 
@@ -399,8 +430,21 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  let sum;
+
+  for (let i = 0; i < m1.length; i += 1) {
+    result[i] = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      sum = 0;
+      for (let k = 0; k < m1[0].length; k += 1) {
+        sum += m1[i][k] * m2[k][j];
+      }
+      result[i][j] = sum;
+    }
+  }
+  return result;
 }
 
 
