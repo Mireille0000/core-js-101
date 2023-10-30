@@ -144,8 +144,19 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  const [top, left, width, height] = [rect1.top, rect1.left, rect1.width, rect1.height];
+  const [top2, left2] = [rect2.top, rect2.left];
+
+  if (top + height < top2 || top > top2 + height) {
+    return false;
+  }
+
+  if (left > left2 + width || left + width < left2) {
+    return false;
+  }
+
+  return true;
 }
 
 
@@ -383,8 +394,37 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const OPEN_BRACKETS = ['{', '[', '(', '<'];
+
+  const BRACKETS_PAIRS = {
+    '}': '{',
+    ']': '[',
+    ')': '(',
+    '>': '<',
+  };
+
+  const result = [];
+
+  for (let i = 0; i < str.length; i += 1) {
+    const currentBracket = str[i];
+    if (OPEN_BRACKETS.includes(currentBracket)) {
+      result.push(currentBracket);
+    } else {
+      if (result.length === 0) {
+        return false;
+      }
+
+      const topBracket = result[result.length - 1];
+
+      if (BRACKETS_PAIRS[currentBracket] === topBracket) {
+        result.pop();
+      } else {
+        return false;
+      }
+    }
+  }
+  return result.length === 0;
 }
 
 
@@ -425,8 +465,29 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((item) => item.split('/'));
+  const toOneArr = arr.flat();
+
+  const result = toOneArr.reduce((acc, item, index) => {
+    const accum = acc;
+
+    if (toOneArr.indexOf(item) !== index && item !== '') {
+      accum.push(item);
+    }
+
+    return accum;
+  }, []);
+
+  if (result.length === pathes.length) {
+    return `/${result.join('/')}/`;
+  }
+
+  if (result.join().length !== 0) {
+    return '';
+  }
+
+  return '/';
 }
 
 
