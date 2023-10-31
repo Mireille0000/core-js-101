@@ -332,8 +332,27 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const ccnNumbersArr = ccn.toString().split('').map((item) => +item);
+
+  for (let i = ccnNumbersArr.length - 2; i >= 0; i -= 2) {
+    let checkingValue = ccnNumbersArr[i];
+    checkingValue *= 2;
+
+    if (checkingValue > 9) {
+      checkingValue = (checkingValue % 10) + 1;
+    }
+
+    ccnNumbersArr[i] = checkingValue;
+  }
+
+  let count = 0;
+
+  for (let i = 0; i < ccnNumbersArr.length; i += 1) {
+    count += ccnNumbersArr[i];
+  }
+
+  return count % 10 === 0;
 }
 
 /**
@@ -448,8 +467,8 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
